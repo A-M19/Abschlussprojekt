@@ -1,61 +1,82 @@
 import streamlit as st
+import pandas as pd
 from views.login_view import render_login_page
-from source import person # Importiert die Datei deiner Kollegin
+from source import person
 
-# Streamlit Konfiguration (MUSS das allererste in der Datei sein!)
 st.set_page_config(page_title="Beat faster!", layout="wide")
 
-# Session State Variablen anlegen, damit Streamlit den Zustand nicht vergisst
 if "page" not in st.session_state:
     st.session_state.page = "login"
 if "eingeloggt_als" not in st.session_state:
     st.session_state.eingeloggt_als = None
 
-# Seiten-Steuerung (Routing)
+# ---------------------------------------------------------------------------
+# Routing
+# ---------------------------------------------------------------------------
 if st.session_state.page in ["login", "registrieren", "erfolg"]:
     render_login_page()
 
 elif st.session_state.page == "hauptseite":
-    # Hol dir die eingegebene ID aus dem Session State
     aktuelle_id = st.session_state.eingeloggt_als
-    
-    # Sicherstellen, dass wir nach einer Zahl suchen, wenn die ID rein numerisch ist
-    if aktuelle_id.isdigit():
-        such_id = int(aktuelle_id)
-    else:
-        such_id = aktuelle_id
+    such_id = int(aktuelle_id) if aktuelle_id and str(aktuelle_id).isdigit() else aktuelle_id
 
-    # Alle Personen laden und den passenden Athleten anhand der ID suchen
-    alle_athleten = person.get_person_data()
-    aktueller_athlet = None
-    
-    for ath in alle_athleten:
-        if ath.id == such_id:
-            aktueller_athlet = ath
-            break
+    aktueller = person.get_person_by_id(such_id)
 
-    # Wenn der Athlet existiert, laden wir das Profil
-    if aktueller_athlet is not None:
-        st.title(f"Beat faster!")
-        st.subheader(f"Hallo! {aktueller_athlet.firstname} {aktueller_athlet.lastname}")
-        st.write(f"**ID:** {aktueller_athlet.id} | **Alter:** {aktueller_athlet.calc_age()} Jahre | **Geschlecht:** {aktueller_athlet.gender}")
-        
-        # Profilbild anzeigen
-        try:
-            bild = aktueller_athlet.get_image()
-            st.image(bild, width=150)
-        except Exception:
-            st.warning("Kein Profilbild unter dem Pfad gefunden.")
-            
-    else:
-        # Sicherheits-Fallback für neu registrierte Accounts
-        st.title(f"Beat faster!")
-        st.subheader(f"Hallo! {aktuelle_id}")
-        st.info("Profil wird geladen... (Da dies ein neuer Account ist, wurden noch keine Profildaten in der JSON hinterlegt).")
+    # ---------- Kopfzeile ----------
+    links, rechts = st.columns([5, 1])
+    with links:
+        if aktueller is not None:
+            st.caption(f"ID: {aktueller.id}")
+            st.title(f"Hallo! {aktueller.firstname}")
+        else:
+            st.title(f"Hallo! {aktuelle_id}")
+    with rechts:
+        if st.button("Abmelden"):
+            st.session_state.page = "login"
+            st.session_state.eingeloggt_als = None
+            st.rerun()
 
-    # Abmelde-Button
-    st.write("---")
-    if st.button("Abmelden"):
-        st.session_state.page = "login"
-        st.session_state.eingeloggt_als = None
-        st.rerun()
+    if aktueller is None:
+        st.info("Für diesen Account sind noch keine Profildaten hinterlegt.")
+        st.stop()
+
+    # ---------- Sportart wählen ----------
+    sportart = st.selectbox("Sportart", aktueller.get_sportarten())
+    athlete_id = aktueller.get_athlete_id_for_sport(sportart)
+    daten = person.get_athlete_measurements(athlete_id)
+
+    if daten.empty:
+        st.warning("Keine Messdaten gefunden.")
+        st.stop()
+
+    # ---------- Tabelle mit Durchschnittswerten ----------
+    tabelle = pd.DataFrame(
+        {
+            "Messwert": ["Ø Herzfrequenz", "O₂-Sättigung",
+                         "Ø Trainings-Intensität", "Muskel-Aktivität"],
+            "Wert": [
+                f"{daten['Heart_Rate'].mean():.0f} bpm",
+                f"{daten['Oxygen_Saturation'].mean():.1f} %",
+                daten["Training_Intensity"].mode()[0],
+                f"{daten['Muscle_Activity'].mean():.1f}",
+            ],
+        }
+    )
+    st.table(tabelle)
+
+    # ---------- Strava-Style: Trainingsvolumen pro Monat ----------
+    st.subheader(f"Die letzten Monate – {sportart}")
+    pro_monat = (
+        daten.set_index("Date")
+        .resample("MS")["Distance_km"]
+        .sum()
+        .rename("Distanz (km)")
+    )
+    # Monatsnamen als Beschriftung
+    pro_monat.index = pro_monat.index.strftime("%b %Y")
+    st.bar_chart(pro_monat)
+
+    # ---------- Herzfrequenz-Verlauf ----------
+    st.subheader("Herzfrequenz-Verlauf")
+    hr = daten.set_index("Date")["Heart_Rate"]
+    st.line_chart(hr)

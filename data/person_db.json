@@ -1,162 +1,152 @@
 [
   {
-    "id": 1,
-    "date_of_birth": 1998,
-    "firstname": "Jenny",
-    "lastname": "Wells",
-    "picture_path": "data/pictures/Athlete_1.jpg",
-    "ekg_tests": [
-      {
-        "id": 1,
-        "date": "10.2.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_1",
-        "intensity_filter": "Low"
-      },
-      {
-        "id": 2,
-        "date": "11.3.2023",
-        "test_type": "Belastung",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_1",
-        "intensity_filter": "High"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "date_of_birth": 2008,
-    "firstname": "Luke",
-    "lastname": "Skywalker",
-    "picture_path": "data/pictures/Athlete_2.jpg",
-    "ekg_tests": [
-      {
-        "id": 3,
-        "date": "10.2.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_2",
-        "intensity_filter": "Low"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "date_of_birth": 2003,
-    "firstname": "Augustus",
-    "lastname": "Gloob",
-    "picture_path": "data/pictures/bl.jpg",
-    "ekg_tests": [
-      {
-        "id": 4,
-        "date": "11.3.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_3",
-        "intensity_filter": "Low"
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "date_of_birth": 2006,
-    "firstname": "Beate",
-    "lastname": "Grün",
-    "picture_path": "data/pictures/Athlete_4.jpg",
-    "ekg_tests": [
-      {
-        "id": 1,
-        "date": "10.2.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_4",
-        "intensity_filter": "Low"
-      },
-      {
-        "id": 2,
-        "date": "11.3.2023",
-        "test_type": "Belastung",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_4",
-        "intensity_filter": "High"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "date_of_birth": 1999,
-    "firstname": "Lily",
-    "lastname": "Xi",
-    "picture_path": "data/pictures/Athlete_5.jpg",
-    "ekg_tests": [
-      {
-        "id": 3,
-        "date": "10.2.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_5",
-        "intensity_filter": "Low"
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "date_of_birth": 2002,
-    "firstname": "Merve",
+    "id": 63354,
+    "firstname": "Maximilian",
     "lastname": "Schmidt",
-    "picture_path": "data/pictures/Athlete_6.jpg",
-    "ekg_tests": [
-      {
-        "id": 4,
-        "date": "11.3.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_6",
-        "intensity_filter": "Low"
-      }
-    ]
+    "gender": "Male",
+    "date_of_birth": 2006,
+    "picture_path": "data/pictures/Athlete_1.jpg",
+    "sports": {
+      "Schwimmen": "Athlete_41",
+      "Basketball": "Athlete_53",
+      "Leichtathletik": "Athlete_74",
+      "Fußball": "Athlete_124",
+      "Tennis": "Athlete_72"
+    }
   },
   {
-    "id": 7,
-    "date_of_birth": 2000,
-    "firstname": "Matthias",
-    "lastname": "Huber",
-    "picture_path": "data/pictures/Athlete_7.jpg",
-    "ekg_tests": [
-      {
-        "id": 1,
-        "date": "10.2.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_7",
-        "intensity_filter": "Low"
-      },
-      {
-        "id": 2,
-        "date": "11.3.2023",
-        "test_type": "Belastung",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_7",
-        "intensity_filter": "High"
-      }
-    ]
+    "id": 22704,
+    "firstname": "Finn",
+    "lastname": "Koch",
+    "gender": "Male",
+    "date_of_birth": 1998,
+    "picture_path": "data/pictures/Athlete_2.png",
+    "sports": {
+      "Schwimmen": "Athlete_3",
+      "Basketball": "Athlete_138",
+      "Leichtathletik": "Athlete_191",
+      "Fußball": "Athlete_19",
+      "Tennis": "Athlete_222"
+    }
   },
   {
-    "id": 8,
+    "id": 65519,
+    "firstname": "Finn",
+    "lastname": "Richter",
+    "gender": "Male",
     "date_of_birth": 2008,
-    "firstname": "Fabienne",
-    "lastname": "Peace",
-    "picture_path": "data/pictures/Athlete_8.jpg",
-    "ekg_tests": [
-      {
-        "id": 3,
-        "date": "10.2.2023",
-        "test_type": "Ruhe",
-        "result_link": "data/athlete_physiological_dataset.csv",
-        "athlete_id": "Athlete_8",
-        "intensity_filter": "Low"
-      }
-    ]
+    "picture_path": "data/pictures/Athlete_3.png",
+    "sports": {
+      "Schwimmen": "Athlete_96",
+      "Basketball": "Athlete_197",
+      "Leichtathletik": "Athlete_164",
+      "Fußball": "Athlete_159",
+      "Tennis": "Athlete_169"
+    }
+  },
+  {
+    "id": 17100,
+    "firstname": "Jonas",
+    "lastname": "Müller",
+    "gender": "Male",
+    "date_of_birth": 1999,
+    "picture_path": "data/pictures/Athlete_4.png",
+    "sports": {
+      "Schwimmen": "Athlete_207",
+      "Basketball": "Athlete_102",
+      "Leichtathletik": "Athlete_107",
+      "Fußball": "Athlete_48",
+      "Tennis": "Athlete_176"
+    }
+  },
+  {
+    "id": 62772,
+    "firstname": "Leon",
+    "lastname": "Schmidt",
+    "gender": "Male",
+    "date_of_birth": 1997,
+    "picture_path": "data/pictures/Athlete_5.jpg",
+    "sports": {
+      "Schwimmen": "Athlete_180",
+      "Basketball": "Athlete_36",
+      "Leichtathletik": "Athlete_100",
+      "Fußball": "Athlete_177",
+      "Tennis": "Athlete_83"
+    }
+  },
+  {
+    "id": 42591,
+    "firstname": "Lea",
+    "lastname": "Becker",
+    "gender": "Female",
+    "date_of_birth": 2001,
+    "picture_path": "data/pictures/Athlete_6.jpg",
+    "sports": {
+      "Schwimmen": "Athlete_212",
+      "Basketball": "Athlete_114",
+      "Leichtathletik": "Athlete_187",
+      "Fußball": "Athlete_234",
+      "Tennis": "Athlete_189"
+    }
+  },
+  {
+    "id": 80292,
+    "firstname": "Lina",
+    "lastname": "Wagner",
+    "gender": "Female",
+    "date_of_birth": 1997,
+    "picture_path": "data/pictures/Athlete_7.png",
+    "sports": {
+      "Schwimmen": "Athlete_85",
+      "Basketball": "Athlete_31",
+      "Leichtathletik": "Athlete_214",
+      "Fußball": "Athlete_29",
+      "Tennis": "Athlete_40"
+    }
+  },
+  {
+    "id": 65296,
+    "firstname": "Hannah",
+    "lastname": "Hoffmann",
+    "gender": "Female",
+    "date_of_birth": 1997,
+    "picture_path": "data/pictures/Athlete_8.png",
+    "sports": {
+      "Schwimmen": "Athlete_226",
+      "Basketball": "Athlete_144",
+      "Leichtathletik": "Athlete_68",
+      "Fußball": "Athlete_161",
+      "Tennis": "Athlete_8"
+    }
+  },
+  {
+    "id": 70637,
+    "firstname": "Lea",
+    "lastname": "Schmidt",
+    "gender": "Female",
+    "date_of_birth": 1999,
+    "picture_path": "data/pictures/Athlete_1.jpg",
+    "sports": {
+      "Schwimmen": "Athlete_158",
+      "Basketball": "Athlete_116",
+      "Leichtathletik": "Athlete_67",
+      "Fußball": "Athlete_146",
+      "Tennis": "Athlete_20"
+    }
+  },
+  {
+    "id": 68082,
+    "firstname": "Clara",
+    "lastname": "Schmidt",
+    "gender": "Female",
+    "date_of_birth": 2004,
+    "picture_path": "data/pictures/Athlete_2.png",
+    "sports": {
+      "Schwimmen": "Athlete_106",
+      "Basketball": "Athlete_223",
+      "Leichtathletik": "Athlete_16",
+      "Fußball": "Athlete_9",
+      "Tennis": "Athlete_10"
+    }
   }
 ]
