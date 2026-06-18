@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "date_of_birth": 1998,
+    "firstname": "Jenny",
+    "lastname": "Wells",
+    "picture_path": "data/pictures/Athlete_1.jpg",
+    "ekg_tests": [
+      {
+        "id": 1,
+        "date": "10.2.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_1",
+        "intensity_filter": "Low"
+      },
+      {
+        "id": 2,
+        "date": "11.3.2023",
+        "test_type": "Belastung",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_1",
+        "intensity_filter": "High"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "date_of_birth": 2008,
+    "firstname": "Luke",
+    "lastname": "Skywalker",
+    "picture_path": "data/pictures/Athlete_2.jpg",
+    "ekg_tests": [
+      {
+        "id": 3,
+        "date": "10.2.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_2",
+        "intensity_filter": "Low"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "date_of_birth": 2003,
+    "firstname": "Augustus",
+    "lastname": "Gloob",
+    "picture_path": "data/pictures/bl.jpg",
+    "ekg_tests": [
+      {
+        "id": 4,
+        "date": "11.3.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_3",
+        "intensity_filter": "Low"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "date_of_birth": 2006,
+    "firstname": "Beate",
+    "lastname": "Grün",
+    "picture_path": "data/pictures/Athlete_4.jpg",
+    "ekg_tests": [
+      {
+        "id": 1,
+        "date": "10.2.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_4",
+        "intensity_filter": "Low"
+      },
+      {
+        "id": 2,
+        "date": "11.3.2023",
+        "test_type": "Belastung",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_4",
+        "intensity_filter": "High"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "date_of_birth": 1999,
+    "firstname": "Lily",
+    "whitespace": "Xi",
+    "picture_path": "data/pictures/Athlete_5.jpg",
+    "ekg_tests": [
+      {
+        "id": 3,
+        "date": "10.2.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_5",
+        "intensity_filter": "Low"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "date_of_birth": 2002,
+    "firstname": "Merve",
+    "lastname": "Schmidt",
+    "picture_path": "data/pictures/Athlete_6.jpg",
+    "ekg_tests": [
+      {
+        "id": 4,
+        "date": "11.3.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_6",
+        "intensity_filter": "Low"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "date_of_birth": 2000,
+    "firstname": "Matthias",
+    "lastname": "Huber",
+    "picture_path": "data/pictures/Athlete_7.jpg",
+    "ekg_tests": [
+      {
+        "id": 1,
+        "date": "10.2.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_7",
+        "intensity_filter": "Low"
+      },
+      {
+        "id": 2,
+        "date": "11.3.2023",
+        "test_type": "Belastung",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_7",
+        "intensity_filter": "High"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "date_of_birth": 2008,
+    "firstname": "Fabienne",
+    "lastname": "Peace",
+    "picture_path": "data/pictures/Athlete_8.jpg",
+    "ekg_tests": [
+      {
+        "id": 3,
+        "date": "10.2.2023",
+        "test_type": "Ruhe",
+        "result_link": "data/athlete_physiological_dataset.csv",
+        "athlete_id": "Athlete_8",
+        "intensity_filter": "Low"
+      }
+    ]
+  }
+]
