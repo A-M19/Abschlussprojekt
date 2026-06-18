@@ -87,7 +87,7 @@
     "id": 5,
     "date_of_birth": 1999,
     "firstname": "Lily",
-    "whitespace": "Xi",
+    "lastname": "Xi",
     "picture_path": "data/pictures/Athlete_5.jpg",
     "ekg_tests": [
       {
