@@ -23,11 +23,24 @@ elif st.session_state.page == "hauptseite":
     aktueller = person.get_person_by_id(such_id)
 
     # ---------- Kopfzeile ----------
+    # ---------- Kopfzeile ----------
     links, rechts = st.columns([5, 1])
     with links:
         if aktueller is not None:
-            st.caption(f"ID: {aktueller.id}")
-            st.title(f"Hallo! {aktueller.firstname}")
+            bild_spalte, info_spalte = st.columns([1, 4])
+            with bild_spalte:
+                try:
+                    st.image(aktueller.get_image(), width=120)
+                except FileNotFoundError:
+                    st.warning("Kein Bild gefunden")
+            with info_spalte:
+                st.caption(f"ID: {aktueller.id}")
+                st.title(f"Hallo! {aktueller.firstname}")
+                st.write(
+                    f"**Geburtsjahr:** {aktueller.date_of_birth} &nbsp;&nbsp; "
+                    f"**Alter:** {aktueller.calc_age()} &nbsp;&nbsp; "
+                    f"**Geschlecht:** {aktueller.gender}"
+                )
         else:
             st.title(f"Hallo! {aktuelle_id}")
     with rechts:
@@ -80,3 +93,9 @@ elif st.session_state.page == "hauptseite":
     st.subheader("Herzfrequenz-Verlauf")
     hr = daten.set_index("Date")["Heart_Rate"]
     st.line_chart(hr)
+
+
+
+
+
+
