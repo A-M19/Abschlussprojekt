@@ -1,6 +1,10 @@
 import streamlit as st
 from auth import login_user, register_user
 
+# HIER GEÄNDERT: Absoluter Import statt relativer Import mit Punkt,
+# damit Python die Datei aus dem Hauptverzeichnis fehlerfrei findet!
+from views.hilfe_button import zeige_hilfe_bereich
+
 
 def render_login_page():
     # ----------------------------- LOGIN -----------------------------
@@ -26,8 +30,6 @@ def render_login_page():
             if st.button("neuen Account erstellen"):
                 st.session_state.page = "registrieren"
                 st.rerun()
-
-        st.caption("Hilfe")
 
     # -------------------------- REGISTRIEREN --------------------------
     elif st.session_state.page == "registrieren":
@@ -61,3 +63,7 @@ def render_login_page():
         if st.button("Zum Login"):
             st.session_state.page = "login"
             st.rerun()
+
+    # Rendert den Button beim Login ganz unten
+    st.markdown("<br><br>", unsafe_allow_html=True)  
+    zeige_hilfe_bereich()

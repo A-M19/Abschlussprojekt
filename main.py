@@ -20,5 +20,5 @@ if st.session_state.page in ["login", "registrieren", "erfolg"]:
     render_login_page()
 elif st.session_state.page == "hauptseite":
     render_hauptseite()
+zeige_hilfe_bereich ()
 
-zeige_hilfe_bereich()
