@@ -3,6 +3,7 @@ import pandas as pd
 from views.login_view import render_login_page
 from source import person
 from views.hilfe_button import zeige_hilfe_bereich
+from views.profil_bearbeiten import zeige_profil_bearbeiten
 
 st.set_page_config(page_title="Beat faster!", layout="wide")
 
@@ -23,7 +24,6 @@ elif st.session_state.page == "hauptseite":
 
     aktueller = person.get_person_by_id(such_id)
 
-    # ---------- Kopfzeile ----------
     # ---------- Kopfzeile ----------
     links, rechts = st.columns([5, 1])
     with links:
@@ -54,49 +54,54 @@ elif st.session_state.page == "hauptseite":
         st.info("Für diesen Account sind noch keine Profildaten hinterlegt.")
         st.stop()
 
-    # ---------- Sportart wählen ----------
-    sportart = st.selectbox("Sportart", aktueller.get_sportarten())
-    athlete_id = aktueller.get_athlete_id_for_sport(sportart)
-    daten = person.get_athlete_measurements(athlete_id)
+    # ---------- Tabs für Dashboard und Bearbeiten ----------
+    tab_dashboard, tab_bearbeiten = st.tabs(["📊 Dashboard", "📝 Profil bearbeiten"])
 
-    if daten.empty:
-        st.warning("Keine Messdaten gefunden.")
-        st.stop()
+    with tab_dashboard:
+        # ---------- Sportart wählen ----------
+        sportart = st.selectbox("Sportart", aktueller.get_sportarten())
+        athlete_id = aktueller.get_athlete_id_for_sport(sportart)
+        daten = person.get_athlete_measurements(athlete_id)
 
-    # ---------- Tabelle mit Durchschnittswerten ----------
-    tabelle = pd.DataFrame(
-        {
-            "Messwert": ["Ø Herzfrequenz", "O₂-Sättigung",
-                         "Ø Trainings-Intensität", "Muskel-Aktivität"],
-            "Wert": [
-                f"{daten['Heart_Rate'].mean():.0f} bpm",
-                f"{daten['Oxygen_Saturation'].mean():.1f} %",
-                daten["Training_Intensity"].mode()[0],
-                f"{daten['Muscle_Activity'].mean():.1f}",
-            ],
-        }
-    )
-    st.table(tabelle)
+        if daten.empty:
+            st.warning("Keine Messdaten gefunden.")
+            st.stop()
 
-    # ---------- Strava-Style: Trainingsvolumen pro Monat ----------
-    st.subheader(f"Die letzten Monate – {sportart}")
-    pro_monat = (
-        daten.set_index("Date")
-        .resample("MS")["Distance_km"]
-        .sum()
-        .rename("Distanz (km)")
-    )
-    # Monatsnamen als Beschriftung
-    pro_monat.index = pro_monat.index.strftime("%b %Y")
-    st.bar_chart(pro_monat)
+        # ---------- Tabelle mit Durchschnittswerten ----------
+        tabelle = pd.DataFrame(
+            {
+                "Messwert": ["Ø Herzfrequenz", "O₂-Sättigung",
+                             "Ø Trainings-Intensität", "Muskel-Aktivität"],
+                "Wert": [
+                    f"{daten['Heart_Rate'].mean():.0f} bpm",
+                    f"{daten['Oxygen_Saturation'].mean():.1f} %",
+                    daten["Training_Intensity"].mode()[0],
+                    f"{daten['Muscle_Activity'].mean():.1f}",
+                ],
+            }
+        )
+        st.table(tabelle)
 
-    # ---------- Herzfrequenz-Verlauf ----------
-    st.subheader("Herzfrequenz-Verlauf")
-    hr = daten.set_index("Date")["Heart_Rate"]
-    st.line_chart(hr)
+        # ---------- Strava-Style: Trainingsvolumen pro Monat ----------
+        st.subheader(f"Die letzten Monate – {sportart}")
+        pro_monat = (
+            daten.set_index("Date")
+            .resample("MS")["Distance_km"]
+            .sum()
+            .rename("Distanz (km)")
+        )
+        # Monatsnamen als Beschriftung
+        pro_monat.index = pro_monat.index.strftime("%b %Y")
+        st.bar_chart(pro_monat)
+
+        # ---------- Herzfrequenz-Verlauf ----------
+        st.subheader("Herzfrequenz-Verlauf")
+        hr = daten.set_index("Date")["Heart_Rate"]
+        st.line_chart(hr)
+
+    with tab_bearbeiten:
+        zeige_profil_bearbeiten()
 
 
 zeige_hilfe_bereich()
-
-
 
