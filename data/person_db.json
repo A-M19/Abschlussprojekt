@@ -1,11 +1,11 @@
 [
   {
     "id": 63354,
-    "firstname": "Maximilian",
-    "lastname": "Schmidt",
-    "gender": "Male",
+    "firstname": "Jenny",
+    "lastname": "Thompson",
+    "gender": "Weiblich",
     "date_of_birth": 2006,
-    "picture_path": "data/pictures/Athlete_1.jpg",
+    "picture_path": "data/pictures/Athlete_1.png",
     "sports": {
       "Schwimmen": "Athlete_41",
       "Basketball": "Athlete_53",
@@ -18,7 +18,7 @@
     "id": 22704,
     "firstname": "Finn",
     "lastname": "Koch",
-    "gender": "Male",
+    "gender": "Männlich",
     "date_of_birth": 1998,
     "picture_path": "data/pictures/Athlete_2.png",
     "sports": {
@@ -31,9 +31,9 @@
   },
   {
     "id": 65519,
-    "firstname": "Finn",
+    "firstname": "Thobias",
     "lastname": "Richter",
-    "gender": "Male",
+    "gender": "Männlich",
     "date_of_birth": 2008,
     "picture_path": "data/pictures/Athlete_3.png",
     "sports": {
@@ -46,9 +46,9 @@
   },
   {
     "id": 17100,
-    "firstname": "Jonas",
+    "firstname": "Hannah",
     "lastname": "Müller",
-    "gender": "Male",
+    "gender": "Weiblich",
     "date_of_birth": 1999,
     "picture_path": "data/pictures/Athlete_4.png",
     "sports": {
@@ -61,11 +61,11 @@
   },
   {
     "id": 62772,
-    "firstname": "Leon",
-    "lastname": "Schmidt",
-    "gender": "Male",
+    "firstname": "Lily",
+    "lastname": "Berger",
+    "gender": "Weiblich",
     "date_of_birth": 1997,
-    "picture_path": "data/pictures/Athlete_5.jpg",
+    "picture_path": "data/pictures/Athlete_5.png",
     "sports": {
       "Schwimmen": "Athlete_180",
       "Basketball": "Athlete_36",
@@ -78,9 +78,9 @@
     "id": 42591,
     "firstname": "Lea",
     "lastname": "Becker",
-    "gender": "Female",
+    "gender": "Weiblich",
     "date_of_birth": 2001,
-    "picture_path": "data/pictures/Athlete_6.jpg",
+    "picture_path": "data/pictures/Athlete_6.png",
     "sports": {
       "Schwimmen": "Athlete_212",
       "Basketball": "Athlete_114",
@@ -91,9 +91,9 @@
   },
   {
     "id": 80292,
-    "firstname": "Lina",
+    "firstname": "Magnus",
     "lastname": "Wagner",
-    "gender": "Female",
+    "gender": "Männlich",
     "date_of_birth": 1997,
     "picture_path": "data/pictures/Athlete_7.png",
     "sports": {
@@ -106,9 +106,9 @@
   },
   {
     "id": 65296,
-    "firstname": "Hannah",
+    "firstname": "Hatice",
     "lastname": "Hoffmann",
-    "gender": "Female",
+    "gender": "Weiblich",
     "date_of_birth": 1997,
     "picture_path": "data/pictures/Athlete_8.png",
     "sports": {
@@ -121,11 +121,11 @@
   },
   {
     "id": 70637,
-    "firstname": "Lea",
-    "lastname": "Schmidt",
-    "gender": "Female",
+    "firstname": "Jack",
+    "lastname": "Daniels",
+    "gender": "Männlich",
     "date_of_birth": 1999,
-    "picture_path": "data/pictures/Athlete_1.jpg",
+    "picture_path": "data/pictures/Athlete_9.png",
     "sports": {
       "Schwimmen": "Athlete_158",
       "Basketball": "Athlete_116",
@@ -136,11 +136,11 @@
   },
   {
     "id": 68082,
-    "firstname": "Clara",
-    "lastname": "Schmidt",
-    "gender": "Female",
+    "firstname": "Houston",
+    "lastname": "Texas",
+    "gender": "Männlich",
     "date_of_birth": 2004,
-    "picture_path": "data/pictures/Athlete_2.png",
+    "picture_path": "data/pictures/Athlete_10.png",
     "sports": {
       "Schwimmen": "Athlete_106",
       "Basketball": "Athlete_223",
