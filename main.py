@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from views.login_view import render_login_page
 from source import person
+from views.hilfe_button import zeige_hilfe_bereich
 
 st.set_page_config(page_title="Beat faster!", layout="wide")
 
@@ -42,7 +43,7 @@ elif st.session_state.page == "hauptseite":
                     f"**Geschlecht:** {aktueller.gender}"
                 )
         else:
-            st.title(f"Hallo! {aktuelle_id}")
+            st.title(f"Hallo! {aktueller.firstname}")
     with rechts:
         if st.button("Abmelden"):
             st.session_state.page = "login"
@@ -95,7 +96,7 @@ elif st.session_state.page == "hauptseite":
     st.line_chart(hr)
 
 
-
+zeige_hilfe_bereich()
 
 
 
