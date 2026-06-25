@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import altair as alt
 from views.login_view import render_login_page
 from source import person
 from views.hilfe_button import zeige_hilfe_bereich
@@ -43,7 +44,7 @@ elif st.session_state.page == "hauptseite":
                     f"**Geschlecht:** {aktueller.gender}"
                 )
         else:
-            st.title(f"Hallo! {aktueller.firstname}")
+            st.title(f"Hallo! {aktuelle_id}")
     with rechts:
         if st.button("Abmelden"):
             st.session_state.page = "login"
@@ -78,25 +79,27 @@ elif st.session_state.page == "hauptseite":
     )
     st.table(tabelle)
 
-    # ---------- Strava-Style: Trainingsvolumen pro Monat ----------
-    st.subheader(f"Die letzten Monate – {sportart}")
-    pro_monat = (
-        daten.set_index("Date")
-        .resample("MS")["Distance_km"]
-        .sum()
-        .rename("Distanz (km)")
-    )
-    # Monatsnamen als Beschriftung
-    pro_monat.index = pro_monat.index.strftime("%b %Y")
-    st.bar_chart(pro_monat)
+    # ---------- Herzfrequenz als Punkte-Diagramm ----------
+    st.subheader("Herzfrequenz")
 
-    # ---------- Herzfrequenz-Verlauf ----------
-    st.subheader("Herzfrequenz-Verlauf")
-    hr = daten.set_index("Date")["Heart_Rate"]
-    st.line_chart(hr)
+    daten = daten.reset_index(drop=True)
+    daten["Messung"] = daten.index  # gleichmäßiger Abstand auf der x-Achse
+
+    chart = (
+        alt.Chart(daten)
+        .mark_circle(size=60)
+        .encode(
+            # x-Achse ohne Beschriftung, Punkte gleichmäßig verteilt
+            x=alt.X("Messung:Q", axis=None),
+            y=alt.Y("Heart_Rate:Q", title="Herzfrequenz (bpm)",
+                    scale=alt.Scale(zero=False)),
+            tooltip=[
+                alt.Tooltip("Heart_Rate:Q", title="Herzfrequenz", format=".0f"),
+                alt.Tooltip("Training_Intensity:N", title="Intensität"),
+            ],
+        )
+    )
+    st.altair_chart(chart, use_container_width=True)
 
 
 zeige_hilfe_bereich()
-
-
-
