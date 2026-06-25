@@ -17,7 +17,7 @@ def speichere_alle_athleten(daten):
         json.dump(daten, f, indent=4, ensure_ascii=False)
 
 def zeige_profil_bearbeiten():
-    st.markdown("### 📝 Meine persönlichen Daten bearbeiten")
+    st.markdown("### Meine persönlichen Daten bearbeiten")
     
     if "eingeloggt_als" not in st.session_state or st.session_state.eingeloggt_als is None:
         st.warning("Bitte logge dich zuerst ein, um dein Profil zu bearbeiten.")
@@ -64,7 +64,7 @@ def zeige_profil_bearbeiten():
     
     # --- FORMULAR ---
     with st.form("profil_edit_form"):
-        st.write("Hier kannst du deine hinterlegten Daten ändern:")
+        
         
         neuer_vorname = st.text_input("Vorname", value=aktueller_athlet.get("firstname", ""))
         neuer_nachname = st.text_input("Nachname", value=aktueller_athlet.get("lastname", ""))
@@ -87,6 +87,5 @@ def zeige_profil_bearbeiten():
                 alle_athleten[index_oder_key]["phone"] = neues_telefon
             
             speichere_alle_athleten(alle_athleten)
-            st.success("🎉 Deine Daten wurden erfolgreich aktualisiert!")
+            st.success("Deine Daten wurden erfolgreich aktualisiert!")
             st.rerun()
-            
