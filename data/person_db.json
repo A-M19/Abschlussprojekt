@@ -14,7 +14,11 @@
             "Tennis": "Athlete_72"
         },
         "email": "jenny@thompson.eu",
-        "phone": ""
+        "phone": "",
+        "profile_picture": null,
+        "sportarten": [],
+        "trainings": [],
+        "profile_pic": "data/pictures\\Athlete_63354.png"
     },
     {
         "id": 22704,

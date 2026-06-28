@@ -4,9 +4,9 @@ import altair as alt
 import os
 from source import person
 from views.profil_bearbeiten import zeige_profil_bearbeiten
-
-# Wichtig: Importiert den Hilfe-Button aus deiner separaten Datei im views-Ordner
 from views.hilfe_button import zeige_hilfe_bereich
+
+  
 
 # Deutsche Anzeige  <->  englische CSV-Werte
 INTENSITAET_DE = {"Low": "Niedrig", "Medium": "Moderat", "High": "Hoch"}
