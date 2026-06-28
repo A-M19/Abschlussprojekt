@@ -5,7 +5,7 @@
         "lastname": "Thompson",
         "gender": "Weiblich",
         "date_of_birth": 2006,
-        "picture_path": "data/pictures/Athlete_1.png",
+        "picture_path": "data/pictures\\Athlete_63354.png",
         "sports": {
             "Schwimmen": "Athlete_41",
             "Basketball": "Athlete_53",
@@ -18,7 +18,10 @@
         "profile_picture": null,
         "sportarten": [],
         "trainings": [],
-        "profile_pic": "data/pictures\\Athlete_63354.png"
+        "profile_pic": "data/pictures\\Athlete_63354.png",
+        "image_path": "data/pictures\\Athlete_63354.png",
+        "image": "data/pictures\\Athlete_63354.png",
+        "picture": "data/pictures\\Athlete_63354.png"
     },
     {
         "id": 22704,

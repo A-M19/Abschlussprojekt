@@ -1,11 +1,10 @@
 import streamlit as st
 import json
 import os
+from PIL import Image
 
 IMAGE_DIR = "data/pictures"
 os.makedirs(IMAGE_DIR, exist_ok=True)
-
-VORDEFINIERTE_SPORTARTEN = ["Laufen", "Radfahren", "Schwimmen", "Krafttraining", "Wandern", "Yoga", "Inline-Skaten"]
 
 
 def lade_alle_athleten():
@@ -22,24 +21,21 @@ def speichere_alle_athleten(daten):
         json.dump(daten, f, indent=4, ensure_ascii=False)
 
 
-def ermittle_bildpfad_fuer_id(user_id_str: str):
-    """Nimmt IMMER das Bild aus data/pictures/Athlete_<ID>.<ext>, falls vorhanden."""
-    moegliche_endungen = ["png", "jpg", "jpeg"]
-    for ext in moegliche_endungen:
-        pfad = os.path.join(IMAGE_DIR, f"Athlete_{user_id_str}.{ext}")
-        if os.path.exists(pfad):
-            return pfad
-    # Wenn nichts existiert, geben wir den Standardpfad mit png zurück
+def standard_bildpfad(user_id_str: str):
     return os.path.join(IMAGE_DIR, f"Athlete_{user_id_str}.png")
 
 
 def zeige_profil_bearbeiten():
     st.markdown("### Meine persönlichen Daten bearbeiten")
 
+    if st.session_state.get("profil_gespeichert", False):
+        st.success("Änderungen erfolgreich gespeichert")
+        st.session_state.profil_gespeichert = False
+
     if "eingeloggt_als" not in st.session_state or st.session_state.eingeloggt_als is None:
         st.warning("Bitte logge dich zuerst ein, um dein Profil zu bearbeiten.")
         return
-        
+
     aktuelle_id = st.session_state.eingeloggt_als
     user_id_str = str(aktuelle_id)
 
@@ -50,36 +46,36 @@ def zeige_profil_bearbeiten():
     aktueller_athlet = None
     index_oder_key = None
     ist_liste = isinstance(alle_athleten, list)
-    
+
     if ist_liste:
         for index, athlet in enumerate(alle_athleten):
             if isinstance(athlet, dict) and str(athlet.get("id")) == user_id_str:
                 aktueller_athlet = athlet
                 index_oder_key = index
                 break
+
+        if aktueller_athlet is None and str(aktuelle_id).isdigit():
+            idx = int(aktuelle_id)
+            if 0 <= idx < len(alle_athleten):
+                aktueller_athlet = alle_athleten[idx]
+                index_oder_key = idx
     else:
         if user_id_str in alle_athleten:
             aktueller_athlet = alle_athleten[user_id_str]
             index_oder_key = user_id_str
+        elif str(aktuelle_id).isdigit() and int(aktuelle_id) in alle_athleten:
+            aktueller_athlet = alle_athleten[int(aktuelle_id)]
+            index_oder_key = int(aktuelle_id)
 
     if aktueller_athlet is None:
         st.error(f"Fehler: Athlet mit der ID '{aktuelle_id}' wurde nicht gefunden.")
         return
 
-    # --- IMMER BILD AUS data/pictures FÜR DIESE ID NUTZEN ---
-    bildpfad_anzeige = ermittle_bildpfad_fuer_id(user_id_str)
+    bildpfad = standard_bildpfad(user_id_str)
 
-    col1, col2 = st.columns([1, 4])
-    with col1:
-        if os.path.exists(bildpfad_anzeige):
-            st.image(bildpfad_anzeige, width=100)
-        else:
-            st.image(
-                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-                width=100
-            )
+    if os.path.exists(bildpfad):
+        st.image(bildpfad, width=110)
 
-    # --- FORMULAR ---
     with st.form("profil_edit_form"):
         neuer_vorname = st.text_input("Vorname", value=aktueller_athlet.get("firstname", ""))
         neuer_nachname = st.text_input("Nachname", value=aktueller_athlet.get("lastname", ""))
@@ -87,55 +83,49 @@ def zeige_profil_bearbeiten():
         neues_telefon = st.text_input("Telefonnummer", value=aktueller_athlet.get("phone", ""))
 
         st.write("---")
-        st.markdown("#### 📷 Profilbild ändern")
+        st.markdown("#### Profilbild bearbeiten")
 
         hochgeladenes_bild = st.file_uploader(
-            "Wähle ein neues Bild aus (Ersetzt das alte Bild im selben Pfad)",
+            "Neues Profilbild auswählen",
             type=["png", "jpg", "jpeg"]
         )
 
         speichern_gedrueckt = st.form_submit_button("Änderungen speichern")
 
         if speichern_gedrueckt:
+            # Textdaten speichern
+            if ist_liste:
+                alle_athleten[index_oder_key]["firstname"] = neuer_vorname
+                alle_athleten[index_oder_key]["lastname"] = neuer_nachname
+                alle_athleten[index_oder_key]["email"] = neue_email
+                alle_athleten[index_oder_key]["phone"] = neues_telefon
+                ziel = alle_athleten[index_oder_key]
+            else:
+                alle_athleten[index_oder_key]["firstname"] = neuer_vorname
+                alle_athleten[index_oder_key]["lastname"] = neuer_nachname
+                alle_athleten[index_oder_key]["email"] = neue_email
+                alle_athleten[index_oder_key]["phone"] = neues_telefon
+                ziel = alle_athleten[index_oder_key]
 
-            # --- IMMER DEN PFAD IN data/pictures/Athlete_<ID>.* NUTZEN ---
-            # Wenn schon eine Datei existiert, wird sie überschrieben.
-            # Wenn nicht, wird eine neue mit passender Endung angelegt.
+            # Bild nur ersetzen, wenn wirklich ein neues hochgeladen wurde
             if hochgeladenes_bild is not None:
-                # Dateiendung aus Upload
-                dateiendung = hochgeladenes_bild.name.split(".")[-1]
-                bild_pfad_speichern = os.path.join(IMAGE_DIR, f"Athlete_{user_id_str}.{dateiendung}")
-
-                # Falls eine Datei mit anderer Endung existiert, kannst du sie optional löschen:
+                # Alte Varianten loeschen
                 for ext in ["png", "jpg", "jpeg"]:
                     alter_pfad = os.path.join(IMAGE_DIR, f"Athlete_{user_id_str}.{ext}")
-                    if os.path.exists(alter_pfad) and alter_pfad != bild_pfad_speichern:
+                    if os.path.exists(alter_pfad):
                         os.remove(alter_pfad)
 
-                # Falls Datei mit gleicher Endung existiert → löschen
-                if os.path.exists(bild_pfad_speichern):
-                    os.remove(bild_pfad_speichern)
+                # Neues Bild IMMER unter demselben Pfad speichern
+                bild = Image.open(hochgeladenes_bild).convert("RGB")
+                bild.save(bildpfad, format="PNG")
 
-                # Neues Bild speichern
-                with open(bild_pfad_speichern, "wb") as f:
-                    f.write(hochgeladenes_bild.getbuffer())
-
-                # Pfad in DB aktualisieren (optional, aber sauber)
-                aktueller_athlet["profile_pic"] = bild_pfad_speichern
-
-            # --- TEXTFELDER SPEICHERN ---
-            aktueller_athlet["firstname"] = neuer_vorname
-            aktueller_athlet["lastname"] = neuer_nachname
-            aktueller_athlet["email"] = neue_email
-            aktueller_athlet["phone"] = neues_telefon
-
-            # Änderungen speichern
-            if ist_liste:
-                alle_athleten[index_oder_key] = aktueller_athlet
-            else:
-                alle_athleten[index_oder_key] = aktueller_athlet
+                # Alle moeglichen Bildpfad-Felder synchron setzen
+                ziel["profile_pic"] = bildpfad
+                ziel["picture_path"] = bildpfad
+                ziel["image_path"] = bildpfad
+                ziel["image"] = bildpfad
+                ziel["picture"] = bildpfad
 
             speichere_alle_athleten(alle_athleten)
-
-            st.success("Änderungen erfolgreich übernommen!")
+            st.session_state.profil_gespeichert = True
             st.rerun()
