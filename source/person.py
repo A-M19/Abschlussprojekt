@@ -1,14 +1,21 @@
 import json
+import os
 import pandas as pd
 from PIL import Image
 
-CSV_PATH = "data/athlete_physiological_dataset.csv"
+RAW_CSV = "data/athlete_physiological_dataset.csv"
+SESSIONS_CSV = "data/training_sessions.csv"   # angereichert: + Date, Duration_min, Distance_km
 PERSON_DB_PATH = "data/person_db.json"
 
 
 def load_measurements():
-    """Lädt die komplette Mess-CSV als DataFrame."""
-    return pd.read_csv(CSV_PATH)
+    """
+    Lädt die Messdaten. Bevorzugt die angereicherte Datei (mit Date/Duration_min/
+    Distance_km); falls die noch nicht erzeugt wurde, fällt sie auf die Roh-CSV zurück.
+    """
+    if os.path.exists(SESSIONS_CSV):
+        return pd.read_csv(SESSIONS_CSV, parse_dates=["Date"])
+    return pd.read_csv(RAW_CSV)
 
 
 def get_athlete_measurements(athlete_id):

@@ -9,7 +9,7 @@
         "sports": {
             "Schwimmen": "Athlete_41",
             "Basketball": "Athlete_53",
-            "Leichtathletik": "Athlete_74",
+            "Laufen": "Athlete_74",
             "Fußball": "Athlete_124",
             "Tennis": "Athlete_72"
         },
@@ -30,7 +30,7 @@
         "sports": {
             "Schwimmen": "Athlete_3",
             "Basketball": "Athlete_138",
-            "Leichtathletik": "Athlete_191",
+            "Laufen": "Athlete_191",
             "Fußball": "Athlete_19",
             "Tennis": "Athlete_222"
         }
@@ -45,7 +45,7 @@
         "sports": {
             "Schwimmen": "Athlete_96",
             "Basketball": "Athlete_197",
-            "Leichtathletik": "Athlete_164",
+            "Laufen": "Athlete_164",
             "Fußball": "Athlete_159",
             "Tennis": "Athlete_169"
         }
@@ -60,7 +60,7 @@
         "sports": {
             "Schwimmen": "Athlete_207",
             "Basketball": "Athlete_102",
-            "Leichtathletik": "Athlete_107",
+            "Laufen": "Athlete_107",
             "Fußball": "Athlete_48",
             "Tennis": "Athlete_176"
         }
@@ -75,7 +75,7 @@
         "sports": {
             "Schwimmen": "Athlete_180",
             "Basketball": "Athlete_36",
-            "Leichtathletik": "Athlete_100",
+            "Laufen": "Athlete_100",
             "Fußball": "Athlete_177",
             "Tennis": "Athlete_83"
         }
@@ -90,7 +90,7 @@
         "sports": {
             "Schwimmen": "Athlete_212",
             "Basketball": "Athlete_114",
-            "Leichtathletik": "Athlete_187",
+            "Laufen": "Athlete_187",
             "Fußball": "Athlete_234",
             "Tennis": "Athlete_189"
         }
@@ -105,7 +105,7 @@
         "sports": {
             "Schwimmen": "Athlete_85",
             "Basketball": "Athlete_31",
-            "Leichtathletik": "Athlete_214",
+            "Laufen": "Athlete_214",
             "Fußball": "Athlete_29",
             "Tennis": "Athlete_40"
         }
@@ -120,7 +120,7 @@
         "sports": {
             "Schwimmen": "Athlete_226",
             "Basketball": "Athlete_144",
-            "Leichtathletik": "Athlete_68",
+            "Laufen": "Athlete_68",
             "Fußball": "Athlete_161",
             "Tennis": "Athlete_8"
         }
@@ -135,7 +135,7 @@
         "sports": {
             "Schwimmen": "Athlete_158",
             "Basketball": "Athlete_116",
-            "Leichtathletik": "Athlete_67",
+            "Laufen": "Athlete_67",
             "Fußball": "Athlete_146",
             "Tennis": "Athlete_20"
         }
@@ -150,7 +150,7 @@
         "sports": {
             "Schwimmen": "Athlete_106",
             "Basketball": "Athlete_223",
-            "Leichtathletik": "Athlete_16",
+            "Laufen": "Athlete_16",
             "Fußball": "Athlete_9",
             "Tennis": "Athlete_10"
         }
