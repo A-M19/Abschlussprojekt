@@ -53,6 +53,42 @@ def get_person_by_id(person_id):
     return None
 
 
+# NEUE FUNKTION: Erstellt den Athleten mit der richtigen Struktur direkt in der person_db.json
+def create_new_athlete(id, firstname="Neuer", lastname="Athlet", gender="Male", date_of_birth="2000"):
+    """
+    Erstellt einen brandneuen Athleten, speichert ihn in der person_db.json
+    und stellt sicher, dass alle für die Person-Klasse notwendigen Felder existieren.
+    """
+    daten_liste = []
+    if os.path.exists(PERSON_DB_PATH):
+        try:
+            with open(PERSON_DB_PATH, "r", encoding="utf-8") as file:
+                daten_liste = json.load(file)
+        except Exception:
+            daten_liste = []
+
+    # Sicherheits-Check: ID darf nicht doppelt eingetragen werden
+    if any(str(p.get("id")) == str(id) for p in daten_liste):
+        return
+
+    # Struktur exakt an get_person_data() angepasst
+    neuer_eintrag = {
+        "id": int(id),
+        "date_of_birth": str(date_of_birth),
+        "firstname": firstname,
+        "lastname": lastname,
+        "picture_path": f"data/pictures/Athlete_{id}.png",
+        "sports": {}, # Startet leer, damit Sportarten später hinzugefügt werden können
+        "gender": gender
+    }
+    
+    daten_liste.append(neuer_eintrag)
+
+    # Permanent in die JSON-Datei schreiben
+    with open(PERSON_DB_PATH, "w", encoding="utf-8") as file:
+        json.dump(daten_liste, file, indent=4, ensure_ascii=False)
+
+
 class Person:
 
     def __init__(self, id, date_of_birth, firstname, lastname, picture_path, sports, gender="Male"):

@@ -1,9 +1,29 @@
 import streamlit as st
+import json
+import os
 from auth import login_user, register_user
 
-# HIER GEÄNDERT: Absoluter Import statt relativer Import mit Punkt,
-# damit Python die Datei aus dem Hauptverzeichnis fehlerfrei findet!
+# Absoluter Import aus dem Hauptverzeichnis
 from views.hilfe_button import zeige_hilfe_bereich
+
+
+def ueberpruefe_ob_benutzer_existiert(username):
+    """
+    Überprüft in der person_db.json, ob der Name bereits vergeben ist.
+    """
+    json_pfad = os.path.join("data", "person_db.json")
+    if os.path.exists(json_pfad):
+        try:
+            with open(json_pfad, "r", encoding="utf-8") as f:
+                daten_liste = json.load(f)
+                for nutzer in daten_liste:
+                    # Prüft sowohl 'username' als auch 'firstname' (case-insensitive)
+                    existierender_name = nutzer.get("username") or nutzer.get("firstname")
+                    if existierender_name and str(existierender_name).strip().lower() == str(username).strip().lower():
+                        return True
+        except Exception:
+            pass
+    return False
 
 
 def render_login_page():
@@ -44,6 +64,9 @@ def render_login_page():
                 st.error("Felder dürfen nicht leer sein!")
             elif pw1 != pw2:
                 st.error("Passwörter stimmen nicht überein!")
+            # Die Duplikats-Überprüfung vor der Registrierung
+            elif ueberpruefe_ob_benutzer_existiert(name):
+                st.error("Benutzername und Passwort existiert schon, bitte neue Log in Daten wählen")
             else:
                 neue_id = register_user(pw1)
                 if neue_id is not None:

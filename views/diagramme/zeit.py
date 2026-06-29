@@ -96,9 +96,24 @@ def aggregiere_nach_intensitaet(daten, spalte, zeitraum, today=None):
     if sub.empty:
         return pd.DataFrame(columns=["Label", "Training_Intensity", "Wert"]), reihenfolge
 
+    # KORREKTUR: Bereinigt die Intensitätsspalte für manuelle Einträge
+    if "Training_Intensity" in sub.columns:
+        # Falls deutsche Begriffe aus dem Formular reingeschrieben wurden, übersetzen wir sie live
+        de_zu_en = {"Niedrig": "Low", "Moderat": "Medium", "Hoch": "High"}
+        sub["Training_Intensity"] = sub["Training_Intensity"].replace(de_zu_en).fillna("Medium")
+    else:
+        sub["Training_Intensity"] = "Medium"
+
+    # Bucket berechnen und Typen-Gleichheit für das Mapping erzwingen
     sub["bucket"] = _bucket_key(sub, zeitraum)
+    sub["bucket"] = pd.to_datetime(sub["bucket"]).dt.normalize()
+
+    # Aggregation ausführen
     g = sub.groupby(["bucket", "Training_Intensity"])[spalte].sum().reset_index()
+    
+    # Mapping auf die lesbaren Labels (z.B. "29.06")
     g["Label"] = g["bucket"].map(labelmap)
     g = g.dropna(subset=["Label"])
     g["Wert"] = g[spalte].round(1)
+    
     return g[["Label", "Training_Intensity", "Wert"]], reihenfolge

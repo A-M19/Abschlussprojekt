@@ -1,6 +1,6 @@
-# views/diagramme/aktivitaets_diagramm.py
 import streamlit as st
 import altair as alt
+import pandas as pd
 from source import person
 from views.diagramme.zeit import aggregiere_nach_intensitaet
 
@@ -11,9 +11,25 @@ FARBEN = alt.Scale(domain=["Low", "Medium", "High"],
                    range=["#2ca02c", "#f1c40f", "#e74c3c"])  # grün / gelb / rot
 
 
-def zeige_aktivitaets_diagramm(aktueller, sportart, intensitaet_wahl, zeitraum, anker=None):
-    daten = person.get_athlete_measurements(aktueller.get_athlete_id_for_sport(sportart))
+def zeige_aktivitaets_diagramm(aktueller, sportart, intensitaet_wahl, zeitraum, anker=None, daten=None):
+    # Falls keine Daten übergeben wurden, laden wir sie
+    if daten is None:
+        daten = person.get_athlete_measurements(aktueller.get_athlete_id_for_sport(sportart))
+    
     daten = daten.dropna(subset=["Date"]).copy()
+    
+    # Sicherstellen, dass das Datum als echtes Datetime-Objekt vorliegt
+    daten["Date"] = pd.to_datetime(daten["Date"])
+
+    # KORREKTUR / TOLERANZ: Falls Spalten leicht abweichen, benennen wir sie um
+    if "Duration" in daten.columns and "Duration_min" not in daten.columns:
+        daten = daten.rename(columns={"Duration": "Duration_min"})
+    if "Distance" in daten.columns and "Distance_km" not in daten.columns:
+        daten = daten.rename(columns={"Distance": "Distance_km"})
+
+    # Falls gar keine Dauer-Spalte existiert, legen wir eine Dummy-Spalte an (damit es nicht abstürzt)
+    if "Duration_min" not in daten.columns:
+        daten["Duration_min"] = 30.0  # Standard-Fallback, falls leer
 
     if intensitaet_wahl != "Alle":
         daten = daten[daten["Training_Intensity"] == INTENSITAET_EN.get(intensitaet_wahl, intensitaet_wahl)]
@@ -22,8 +38,8 @@ def zeige_aktivitaets_diagramm(aktueller, sportart, intensitaet_wahl, zeitraum, 
         st.info("Keine Verlaufsdaten für diese Auswahl.")
         return
 
-    # Dauer oder Kilometer (nur wenn die Sportart km hat) – Label ausgeblendet
-    hat_km = daten["Distance_km"].notna().any()
+    # Dauer oder Kilometer (nur wenn die Sportart km hat)
+    hat_km = daten["Distance_km"].notna().any() if "Distance_km" in daten.columns else False
     metrik = "Dauer"
     if hat_km:
         metrik = st.segmented_control(
@@ -46,7 +62,7 @@ def zeige_aktivitaets_diagramm(aktueller, sportart, intensitaet_wahl, zeitraum, 
         .mark_bar(cornerRadiusTopLeft=4, cornerRadiusTopRight=4)
         .encode(
             x=alt.X("Label:N", sort=reihenfolge, title=None,
-                    scale=alt.Scale(domain=reihenfolge),  # feste Slots -> kein Stretch
+                    scale=alt.Scale(domain=reihenfolge),
                     axis=alt.Axis(labelAngle=0)),
             y=alt.Y("Wert:Q", title=f"{metrik} ({einheit})"),
             color=alt.Color("Training_Intensity:N", scale=FARBEN, legend=None),
