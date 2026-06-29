@@ -14,7 +14,7 @@ SPORTARTEN_MIT_STRECKE = [
     "Inline-Skaten"
 ]
 
-NEUE_SPORTART_OPTION = "➕ Neue Sportart hinzufügen"
+NEUE_SPORTART_OPTION = "➕ Training hinzufügen"
 
 
 def lade_trainings():

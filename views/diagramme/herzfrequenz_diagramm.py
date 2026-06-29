@@ -21,11 +21,11 @@ def zeige_herzfrequenz_diagramm(daten, zeitraum, anker=None):
     basis = alt.Chart(d).encode(
         x=alt.X("Messung:Q", axis=alt.Axis(title=None, labels=False, grid=False)),
         y=alt.Y("Heart_Rate:Q", title="Herzfrequenz (bpm)", scale=alt.Scale(zero=False),
-                axis=alt.Axis(grid=True, gridColor="#E6E6EC", titleColor="#6D6D78",
-                              labelColor="#6D6D78", titleFontSize=13, labelFontSize=11)),
+                axis=alt.Axis(grid=True, gridColor="#333333", titleColor="#9A9A9A",
+                              labelColor="#9A9A9A", titleFontSize=13, labelFontSize=11)),
     )
 
-    linie = basis.mark_line(color="#9BB4CE", strokeWidth=2.5, opacity=0.9)
+    linie = basis.mark_line(color="#555555", strokeWidth=2.5, opacity=0.8)
     punkte = basis.mark_circle(size=90, opacity=1.0).encode(
         color=alt.Color("Training_Intensity:N", scale=farben, legend=None),
         tooltip=[

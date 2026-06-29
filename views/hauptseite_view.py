@@ -7,8 +7,7 @@ from views.diagramme.herzfrequenz_diagramm import zeige_herzfrequenz_diagramm
 from views.diagramme.aktivitaets_diagramm import zeige_aktivitaets_diagramm
 from views.training_hinzufuegen import zeige_training_hinzufuegen, hole_alle_sportarten
 
-# Importiert den ausgelagerten Leistungsvergleich und die Daten-Pipeline
-from views.leistungsvergleich import zeige_leistungsvergleich, hole_kombinierte_daten
+from views.diagramme.leistungsvergleich import zeige_leistungsvergleich, hole_kombinierte_daten
 from views.hilfe_button import zeige_hilfe_bereich
 
 INTENSITAET_DE = {"Low": "Niedrig", "Medium": "Moderat", "High": "Hoch"}
@@ -21,100 +20,132 @@ def standard_bildpfad(aktueller):
 def render_hauptseite():
     st.markdown("""
         <style>
-        .stApp {
-            background-color: #F3F4F6 !important;
-            color: #1F1F23 !important;
+        /* ---------- DARK / STRAVA THEME ---------- */
+        .stApp { background-color:#1A1A1A !important; color:#E6E6E6 !important; }
+
+        p, span, label, li {
+            color:#E6E6E6 !important;
+            font-family:"Maison Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        h1, h2, h3, h4, p, span, label, div {
-            color: #1F1F23 !important;
-            font-family: "Maison Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        /* Überschriften im Strava-Orange */
+        h1, h2, h3, h4 {
+            color:#FC4C02 !important;
+            font-family:"Maison Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            text-transform:uppercase;
+            letter-spacing:-0.3px !important;
+        }
+        h3 { font-size:22px !important; font-weight:800 !important; margin-bottom:20px !important; }
+
+        /* Stärkerer Selektor: faengt auch Ueberschriften in anderen Views (z.B. Leistungsvergleich) */
+        .stApp h1, .stApp h2, .stApp h3, .stApp h4,
+        div[data-testid="stMarkdownContainer"] h1,
+        div[data-testid="stMarkdownContainer"] h2,
+        div[data-testid="stMarkdownContainer"] h3,
+        div[data-testid="stMarkdownContainer"] h4 {
+            color:#FC4C02 !important;
         }
 
-        h3 {
-            font-size: 22px !important;
-            font-weight: 700 !important;
-            letter-spacing: -0.5px !important;
-            margin-bottom: 20px !important;
+        /* Icon-Buttons + Popover sauber zentriert untereinander */
+        div[data-testid="stButton"], div[data-testid="stPopover"] {
+            display:flex !important; flex-direction:column !important;
+            align-items:center !important; justify-content:center !important;
+            margin-bottom:16px !important;
         }
 
         div[data-testid="stSelectbox"] label p {
-            font-size: 18px !important;
-            font-weight: 700 !important;
-            color: #000000 !important;
+            font-size:15px !important; font-weight:700 !important;
+            color:#E6E6E6 !important; text-transform:uppercase;
         }
 
+        /* Metric-Cards dunkel */
         div[data-testid="stMetric"] {
-            background-color: #FFFFFF !important;
-            padding: 24px !important;
-            border-radius: 6px !important;
-            border: 1px solid #E6E6EC !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+            background-color:#242424 !important; padding:24px !important;
+            border-radius:10px !important; border:1px solid #333333 !important;
+            box-shadow:0 2px 12px rgba(0,0,0,0.35) !important;
         }
-
         div[data-testid="stMetricLabel"] {
-            color: #6D6D78 !important;
-            font-size: 14px !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
-            font-weight: 600 !important;
+            color:#9A9A9A !important; font-size:13px !important;
+            text-transform:uppercase; letter-spacing:0.5px !important; font-weight:600 !important;
         }
+        div[data-testid="stMetricValue"] { color:#FFFFFF !important; font-size:30px !important; font-weight:800 !important; }
 
-        div[data-testid="stMetricValue"] {
-            color: #1F1F23 !important;
-            font-size: 32px !important;
-            font-weight: 800 !important;
-        }
-
+        /* Dropdowns dunkel */
         div[data-testid="stSelectbox"] div[data-baseweb="select"],
         div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-            background-color: #FFFFFF !important;
-            background: #FFFFFF !important;
-            border: none !important;
-            box-shadow: none !important;
-            border-radius: 12px !important;
-            color: #1F1F23 !important;
-            font-size: 17px !important;
-            font-weight: 500 !important;
-            height: 48px !important;
+            background-color:#242424 !important; background:#242424 !important;
+            border:1px solid #333333 !important; box-shadow:none !important;
+            border-radius:10px !important; color:#E6E6E6 !important;
+            font-size:16px !important; font-weight:500 !important; height:48px !important;
         }
 
-        hr {
-            border-color: #D1D5DB !important;
-            margin: 35px 0 !important;
+        hr { border-color:#333333 !important; margin:30px 0 !important; }
+
+        /* Icon-Buttons (Emoji) bleiben transparent */
+        div[data-testid="stButton"] button {
+            background-color:transparent !important; border:none !important; padding:0 !important;
+            font-size:38px !important; line-height:1 !important; box-shadow:none !important;
+            min-height:auto !important; width:fit-content !important; color:#9A9A9A !important;
+            margin-left:auto !important; margin-right:auto !important; display:block !important;
+            transition: transform 0.15s ease, color 0.15s ease;
+        }
+        div[data-testid="stButton"] button p { font-size:38px !important; line-height:1 !important; }
+        div[data-testid="stPopover"] button p { font-size:38px !important; line-height:1 !important; }
+        div[data-testid="stButton"] button:hover p { color:#FC4C02 !important; transform:scale(1.08) !important; }
+
+        /* Aktions-Buttons = orange Pille mit dunkler Schrift */
+        div[data-testid="stButton"] button[kind="primary"],
+        div[data-testid="stButton"] button[data-testid="stBaseButton-primary"] {
+            background-color:#FC4C02 !important; border:none !important; border-radius:30px !important;
+            padding:12px 26px !important; box-shadow:0 2px 10px rgba(252,76,2,0.30) !important;
+            width:auto !important;
+        }
+        div[data-testid="stButton"] button[kind="primary"] p,
+        div[data-testid="stButton"] button[data-testid="stBaseButton-primary"] p {
+            color:#1A1A1A !important; font-size:16px !important; font-weight:800 !important;
+            text-transform:uppercase; letter-spacing:0.3px;
+        }
+        div[data-testid="stButton"] button[kind="primary"]:hover { background-color:#E34402 !important; transform:scale(1.03) !important; }
+
+        /* ---------- DROPDOWN-MENUE (offen): orange Schrift auf schwarz ---------- */
+        ul[data-baseweb="menu"], div[data-baseweb="popover"] ul[role="listbox"] {
+            background-color:#1A1A1A !important;
+        }
+        li[role="option"], ul[data-baseweb="menu"] li {
+            color:#FC4C02 !important; background-color:#1A1A1A !important;
+            font-weight:600 !important;
+        }
+        li[role="option"]:hover, ul[data-baseweb="menu"] li:hover,
+        li[role="option"][aria-selected="true"] {
+            background-color:#242424 !important; color:#FC4C02 !important;
         }
 
-        div[data-testid="stButton"] button,
-        div[data-testid="stButton"] button p {
-            background-color: transparent !important;
-            border: none !important;
-            padding: 0 !important;
-            font-size: 38px !important;
-            line-height: 1 !important;
-            box-shadow: none !important;
-            transition: transform 0.15s ease-in-out, color 0.15s ease;
-            min-height: auto !important;
-            width: auto !important;
-            color: #6D6D78 !important;
+        /* ---------- SEGMENTED CONTROL (Zeitraum / Dauer-km): alle lesbar ---------- */
+        div[data-testid="stSegmentedControl"] button p,
+        div[data-testid="stSegmentedControl"] label p {
+            color:#E6E6E6 !important; font-size:15px !important; font-weight:600 !important;
         }
-
-        div[data-testid="stButton"] {
-            margin-bottom: 20px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
+        div[data-testid="stSegmentedControl"] button {
+            background-color:#242424 !important; border:1px solid #333333 !important;
         }
-
-        div[data-testid="stButton"] button:hover p {
-            color: #FC4C02 !important;
-            transform: scale(1.08) !important;
+        div[data-testid="stSegmentedControl"] button:hover {
+            background-color:#333333 !important;
         }
-        
-        div[data-testid="stButton"] button:focus,
-        div[data-testid="stButton"] button:active {
-            background-color: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
+        div[data-testid="stSegmentedControl"] button[aria-checked="true"],
+        div[data-testid="stSegmentedControl"] button[data-selected="true"] {
+            background-color:#FC4C02 !important; border-color:#FC4C02 !important;
+        }
+        div[data-testid="stSegmentedControl"] button[aria-checked="true"] p,
+        div[data-testid="stSegmentedControl"] button[data-selected="true"] p {
+            color:#1A1A1A !important;
+        }
+        button[kind="segmented_control"], button[kind="segmented_control"] *,
+        button[kind="pills"], button[kind="pills"] * {
+            background-color:#242424 !important; color:#E6E6E6 !important;
+        }
+        button[kind="segmented_controlActive"], button[kind="segmented_controlActive"] *,
+        button[kind="pillsActive"], button[kind="pillsActive"] * {
+            background-color:#FC4C02 !important; color:#1A1A1A !important; border-color:#FC4C02 !important;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -123,22 +154,16 @@ def render_hauptseite():
     such_id = int(akktuelle_id) if akktuelle_id and str(akktuelle_id).isdigit() else akktuelle_id
     aktueller = person.get_person_by_id(such_id)
 
-    # AUTOMATISCHE REGISTRIERUNG NEUER ACCOUNTS:
-    # Wenn die ID in der JSON-Datei noch fehlt, legen wir sie hier live mit Standardwerten an
     if aktueller is None and such_id is not None:
         if hasattr(person, "create_new_athlete"):
             person.create_new_athlete(
-                id=such_id,
-                firstname="Neuer",
-                lastname="Athlet",
-                gender="Male",
-                date_of_birth="2000"
+                id=such_id, firstname="Neuer", lastname="Athlet",
+                gender="Female", date_of_birth="2000"
             )
-            # Direkt neu aus der person_db.json laden -> liefert jetzt ein echtes Person-Objekt
             aktueller = person.get_person_by_id(such_id)
 
     st.markdown(
-        "<div style='font-size: 32px; font-weight: 800; letter-spacing: -1px; color: #1F1F23; margin-bottom: 30px;'>Beat faster!</div>",
+        "<div style='font-size: 40px; font-weight: 800; letter-spacing: -1px; color: #FC4C02; margin-bottom: 30px;'>Beat faster!</div>",
         unsafe_allow_html=True
     )
 
@@ -150,34 +175,31 @@ def render_hauptseite():
         with bild_col:
             try:
                 bild_pfad = standard_bildpfad(aktueller)
-
                 st.markdown("""
                     <style>
-                    img {
-                        border-radius: 8px !important;
-                        border: 1px solid #E6E6EC !important;
-                    }
+                    img { border-radius:8px !important; border:1px solid #333333 !important; }
                     </style>
                 """, unsafe_allow_html=True)
-
                 if aktueller and os.path.exists(bild_pfad):
-                    st.image(bild_pfad, width=110)
+                    st.image(bild_pfad, width=140)
                 else:
                     st.markdown("<div style='font-size: 70px; line-height: 1;'>👤</div>", unsafe_allow_html=True)
-
             except Exception:
                 st.markdown("<div style='font-size: 70px; line-height: 1;'>👤</div>", unsafe_allow_html=True)
 
         with text_col:
             if aktueller:
                 st.markdown(f"""
-                    <div style="font-size: 30px; font-weight: 800; color: #1F1F23; margin-top: 10px; line-height: 1.1; letter-spacing: -0.5px;">
+                    <div style="font-size: 30px; font-weight: 800; color: #FFFFFF; margin-top: 10px; line-height: 1.1; letter-spacing: -0.5px;">
                         {aktueller.firstname} {aktueller.lastname if hasattr(aktueller, 'lastname') else ''}
                     </div>
-                    <div style="font-size: 15px; color: #6D6D78; margin-top: 15px; font-weight: 500;">
+                    <div style="font-size: 15px; color: #9A9A9A; margin-top: 15px; font-weight: 500;">
                         ID: {aktueller.id} &nbsp;•&nbsp; Alter: {aktueller.calc_age()} &nbsp;•&nbsp; Geschlecht: {aktueller.gender}
                     </div>
                 """, unsafe_allow_html=True)
+                # 2 Zeilen Abstand, dann Training hinzufügen
+                st.markdown("<div style='height: 2.4em;'></div>", unsafe_allow_html=True)
+                zeige_training_hinzufuegen(aktueller)
 
     with rechts:
         if st.button("🚪", key="logout_btn"):
@@ -201,18 +223,11 @@ def render_hauptseite():
         if "vergleich_aktiv" not in st.session_state:
             st.session_state.vergleich_aktiv = False
 
-        btn_col1, spacer, btn_col2, _ = st.columns([1.0, 0.5, 1.0, 7.5])
-        
-        with btn_col1:
-            if aktueller:
-                zeige_training_hinzufuegen(aktueller)
-
-        with btn_col2:
-            if st.button("⚖️", key="leistungsvergleich_toggle_btn", help="Leistungsvergleich öffnen / schließen"):
-                st.session_state.vergleich_aktiv = not st.session_state.vergleich_aktiv
-                st.rerun()
-
+        # Vergleichs-Ansicht (mit eigenem Zurück-Button)
         if st.session_state.vergleich_aktiv and aktueller:
+            if st.button("← Zurück zum Dashboard", type="primary", key="vergleich_close_btn"):
+                st.session_state.vergleich_aktiv = False
+                st.rerun()
             zeige_leistungsvergleich(aktueller)
             return
 
@@ -228,7 +243,6 @@ def render_hauptseite():
         with filter_rechts:
             intensitaet_wahl = st.selectbox("Intensitäts-Filter", ["Alle", "Niedrig", "Moderat", "Hoch"])
 
-        # Daten laden
         daten = hole_kombinierte_daten(aktueller, sportart) if aktueller else pd.DataFrame()
 
         if daten.empty:
@@ -236,11 +250,10 @@ def render_hauptseite():
             st.info("👋 Willkommen! Füge über das '+' Symbol dein erstes Training hinzu oder vervollständige dein Profil über das '👤' Symbol.")
             return
 
-        # Datetime konvertieren
         daten["Date"] = pd.to_datetime(daten["Date"])
         anker = daten["Date"].max()
         daten = daten.copy()
-        
+
         if "Training_Intensity" in daten.columns:
             daten["Intensität"] = daten["Training_Intensity"].map(INTENSITAET_DE).fillna("Moderat")
         else:
@@ -256,13 +269,11 @@ def render_hauptseite():
 
         st.markdown("<hr>", unsafe_allow_html=True)
 
-        st.markdown("<h3>Aktivitäts-Zusammenfassung</h3>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:-0.3px; color:#FC4C02; margin-bottom:20px;'>Aktivitäts-Zusammenfassung</div>", unsafe_allow_html=True)
         m1, m2, m3 = st.columns(3)
-
         hr_val = daten['Heart_Rate'].mean() if 'Heart_Rate' in daten.columns else 0
         o2_val = daten['Oxygen_Saturation'].mean() if 'Oxygen_Saturation' in daten.columns else 0
         mu_val = daten['Muscle_Activity'].mean() if 'Muscle_Activity' in daten.columns else 0
-
         with m1:
             st.metric(label="❤️ Ø Herzfrequenz", value=f"{hr_val:.0f} bpm")
         with m2:
@@ -273,7 +284,7 @@ def render_hauptseite():
         st.markdown("<hr>", unsafe_allow_html=True)
 
         # ---------- AKTIVITÄT ----------
-        st.markdown("<h3>Aktivität</h3>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:-0.3px; color:#FC4C02; margin-bottom:20px;'>Aktivität</div>", unsafe_allow_html=True)
 
         zeit_col, legende_col = st.columns([2, 1])
         with zeit_col:
@@ -285,10 +296,8 @@ def render_hauptseite():
             ) or "Letzte 6 Monate"
         with legende_col:
             st.markdown("""
-                <div style="text-align: right; font-size: 14px; font-weight: 600; color: #6D6D78; padding-top: 8px;">
-                    <span style="color: #2ca02c;">●</span> Niedrig &nbsp;
-                    <span style="color: #f1c40f;">●</span> Moderat &nbsp;
-                    <span style="color: #e74c3c;">●</span> Hoch
+                <div style="text-align: right; font-size: 14px; font-weight: 600; color: #9A9A9A; padding-top: 8px;">
+                    🟢 Niedrig &nbsp; 🟡 Moderat &nbsp; 🔴 Hoch
                 </div>
             """, unsafe_allow_html=True)
 
@@ -297,8 +306,14 @@ def render_hauptseite():
         st.markdown("<hr>", unsafe_allow_html=True)
 
         # ---------- HERZFREQUENZ ----------
-        st.markdown("<h3>Herzfrequenz</h3>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:-0.3px; color:#FC4C02; margin-bottom:20px;'>Herzfrequenz</div>", unsafe_allow_html=True)
         zeige_herzfrequenz_diagramm(daten, zeitraum, anker)
+
+        # ---------- LEISTUNG VERGLEICHEN (ganz unten) ----------
+        st.markdown("<hr>", unsafe_allow_html=True)
+        if st.button("Leistung vergleichen", type="primary", key="leistungsvergleich_toggle_btn"):
+            st.session_state.vergleich_aktiv = True
+            st.rerun()
 
     elif st.session_state.ansicht == "bearbeiten":
         zeige_profil_bearbeiten()
