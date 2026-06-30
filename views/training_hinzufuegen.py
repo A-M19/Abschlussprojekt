@@ -36,15 +36,19 @@ def speichere_trainings(trainings):
 
 
 def lade_eigene_sportarten():
-    """Lädt die vom Nutzer selbst hinzugefügten Sportarten (Name + ob sie eine Strecke haben)."""
+    """Lädt die vom Nutzer selbst hinzugefügten Sportarten (Name + ob sie eine Strecke haben).
+    Einträge ohne gültigen "name"-Schlüssel werden hier herausgefiltert, damit fehlerhafte
+    oder veraltete Daten in sportarten_custom.json die App nicht zum Absturz bringen."""
     if not os.path.exists(SPORTARTEN_CUSTOM_PATH):
         return []
 
     try:
         with open(SPORTARTEN_CUSTOM_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+            daten = json.load(f)
     except Exception:
         return []
+
+    return [s for s in daten if isinstance(s, dict) and s.get("name")]
 
 
 def speichere_eigene_sportart(name, hat_strecke):

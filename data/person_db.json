@@ -5,20 +5,14 @@
         "lastname": "Thompson",
         "gender": "Weiblich",
         "date_of_birth": 2006,
-        "picture_path": "data/pictures\\Athlete_63354.png",
+        "picture_path": "data/pictures\\Athlete_1.png",
         "sports": {
             "Schwimmen": "Athlete_41",
             "Basketball": "Athlete_53",
             "Laufen": "Athlete_74",
             "Fußball": "Athlete_124",
             "Tennis": "Athlete_72"
-        },
-        "email": "",
-        "phone": "",
-        "profile_pic": "data/pictures\\Athlete_63354.png",
-        "image_path": "data/pictures\\Athlete_63354.png",
-        "image": "data/pictures\\Athlete_63354.png",
-        "picture": "data/pictures\\Athlete_63354.png"
+        }
     },
     {
         "id": 22704,
@@ -154,14 +148,5 @@
             "Fußball": "Athlete_9",
             "Tennis": "Athlete_10"
         }
-    },
-    {
-        "id": 19116,
-        "date_of_birth": "2000",
-        "firstname": "Neuer",
-        "lastname": "Athlet",
-        "picture_path": "data/pictures/Athlete_19116.png",
-        "sports": {},
-        "gender": "Male"
     }
 ]
