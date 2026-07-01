@@ -4,15 +4,26 @@ Ein Fitness-Dashboard, gebaut mit **Streamlit**. Nach dem Login sieht man pro Sp
 
 Dieses Projekt ist im Rahmen der Programmierübung als Abschlussprojekt entstanden.
 
----
-
-## Voraussetzungen
-
-- **Python 3** (getestet mit 3.11+)
-- Alle nötigen Pakete stehen in der `requirements.txt` 
 
 ---
+## Vorraussetzungen
 
+- **Python 3.10 oder neuer** (getestet mit 3.14) 
+
+---
+## Verwendete Bibliotheken
+
+- **streamlit** 
+- **pandas** 
+- **altair** 
+- **bcrypt** 
+- **Pillow (PIL)** 
+
+Zusätzlich werden Module der Python-Standardbibliothek genutzt (u. a. `json`, `os`,
+`datetime`, `random`) – diese sind in Python bereits enthalten und müssen nicht
+installiert werden.
+
+---
 ## Installation & Start
 
 1. **Alle benötigten Pakete installieren** 
@@ -30,6 +41,13 @@ Dieses Projekt ist im Rahmen der Programmierübung als Abschlussprojekt entstand
    ```
 
    Danach öffnet sich die App automatisch im Browser 
+---
+## Alternatives Deployment
+
+Die App ist über Streamlit Community Cloud deploybar. Community Cloud installiert
+alle Abhängigkeiten automatisch aus der `requirements.txt`. Einstiegspunkt ist `main.py`.
+
+🔗 **Live-Demo:** https://dein-app-name.streamlit.app
 
 ---
 
