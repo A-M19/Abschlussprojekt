@@ -26,7 +26,7 @@ def standard_bildpfad(user_id_str: str):
 
 
 def zeige_profil_bearbeiten():
-    st.markdown("### Meine persönlichen Daten bearbeiten")
+    st.markdown("<div style='font-size:24px; font-weight:800; text-transform:uppercase; letter-spacing:-0.3px; color:#FC4C02; margin-bottom:20px;'>Meine persönlichen Daten bearbeiten</div>", unsafe_allow_html=True)
 
     if st.session_state.get("profil_gespeichert", False):
         st.success("Änderungen erfolgreich gespeichert")
@@ -83,7 +83,7 @@ def zeige_profil_bearbeiten():
         neues_telefon = st.text_input("Telefonnummer", value=aktueller_athlet.get("phone", ""))
 
         st.write("---")
-        st.markdown("#### Profilbild bearbeiten")
+        st.markdown("<div style='font-size:19px; font-weight:800; text-transform:uppercase; letter-spacing:-0.3px; color:#FFFFFF; margin-bottom:12px;'>Profilbild bearbeiten</div>", unsafe_allow_html=True)
 
         hochgeladenes_bild = st.file_uploader(
             "Neues Profilbild auswählen",
@@ -93,7 +93,6 @@ def zeige_profil_bearbeiten():
         speichern_gedrueckt = st.form_submit_button("Änderungen speichern")
 
         if speichern_gedrueckt:
-            # Textdaten speichern
             if ist_liste:
                 alle_athleten[index_oder_key]["firstname"] = neuer_vorname
                 alle_athleten[index_oder_key]["lastname"] = neuer_nachname
@@ -107,19 +106,15 @@ def zeige_profil_bearbeiten():
                 alle_athleten[index_oder_key]["phone"] = neues_telefon
                 ziel = alle_athleten[index_oder_key]
 
-            # Bild nur ersetzen, wenn wirklich ein neues hochgeladen wurde
             if hochgeladenes_bild is not None:
-                # Alte Varianten loeschen
                 for ext in ["png", "jpg", "jpeg"]:
                     alter_pfad = os.path.join(IMAGE_DIR, f"Athlete_{user_id_str}.{ext}")
                     if os.path.exists(alter_pfad):
                         os.remove(alter_pfad)
 
-                # Neues Bild IMMER unter demselben Pfad speichern
                 bild = Image.open(hochgeladenes_bild).convert("RGB")
                 bild.save(bildpfad, format="PNG")
 
-                # Alle moeglichen Bildpfad-Felder synchron setzen
                 ziel["profile_pic"] = bildpfad
                 ziel["picture_path"] = bildpfad
                 ziel["image_path"] = bildpfad

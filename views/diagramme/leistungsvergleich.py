@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import json
 from source import person
-from views.training_hinzufuegen import hole_alle_sportarten
+from views.extras.training_hinzufuegen import hole_alle_sportarten
 
 INTENSITAET_DE = {"Low": "Niedrig", "Medium": "Moderat", "High": "Hoch"}
 TRAINING_DB_PATH = "data/training_db.json"

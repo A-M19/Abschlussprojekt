@@ -3,12 +3,12 @@ import os
 import pandas as pd
 
 from source import person
-from views.profil_bearbeiten import zeige_profil_bearbeiten
+from views.extras.profil_bearbeiten import zeige_profil_bearbeiten
 from views.diagramme.herzfrequenz_diagramm import zeige_herzfrequenz_diagramm
 from views.diagramme.aktivitaets_diagramm import zeige_aktivitaets_diagramm
-from views.training_hinzufuegen import zeige_training_hinzufuegen, hole_alle_sportarten
+from views.extras.training_hinzufuegen import zeige_training_hinzufuegen, hole_alle_sportarten
 from views.diagramme.leistungsvergleich import zeige_leistungsvergleich, hole_kombinierte_daten
-from views.hilfe_button import zeige_hilfe_bereich
+from views.extras.hilfe_button import zeige_hilfe_bereich
 from views.styles_theme import apply_dark_theme
 
 INTENSITAET_DE = {"Low": "Niedrig", "Medium": "Moderat", "High": "Hoch"}
@@ -109,7 +109,7 @@ def render_hauptseite():
                 zeige_training_hinzufuegen(aktueller)
 
     with rechts:
-        if st.button("🚪", key="logout_btn"):
+        if st.button("🚪", key="logout_btn", help="Abmelden"):
             st.session_state.page = "login"
             st.session_state.eingeloggt_als = None
             st.rerun()
@@ -145,6 +145,7 @@ def _render_dashboard(aktueller):
         return
 
     # Filter-Zeile
+    st.markdown("<hr>", unsafe_allow_html=True)
     filter_links, filter_rechts = st.columns(2)
 
     with filter_links:
@@ -159,7 +160,6 @@ def _render_dashboard(aktueller):
     daten = hole_kombinierte_daten(aktueller, sportart) if aktueller else pd.DataFrame()
 
     if daten.empty:
-        st.markdown("<hr>", unsafe_allow_html=True)
         st.info(
             "👋 Willkommen! Füge über das '+' Symbol dein erstes Training hinzu "
             "oder vervollständige dein Profil über das '👤' Symbol."

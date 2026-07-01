@@ -1,7 +1,7 @@
 import streamlit as st
 from views.login_view import render_login_page
 from views.hauptseite_view import render_hauptseite
-from views.hilfe_button import zeige_hilfe_bereich
+from views.extras.hilfe_button import zeige_hilfe_bereich
 
 
 st.set_page_config(page_title="Beat faster!", layout="wide")

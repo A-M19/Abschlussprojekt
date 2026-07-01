@@ -14,7 +14,6 @@ def apply_dark_theme():
             font-family:"Maison Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        /* Überschriften im Strava-Orange */
         h1, h2, h3, h4 {
             color:#FC4C02 !important;
             font-family:"Maison Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -23,7 +22,6 @@ def apply_dark_theme():
         }
         h3 { font-size:22px !important; font-weight:800 !important; margin-bottom:20px !important; }
 
-        /* Stärkerer Selektor für Überschriften in anderen Views */
         .stApp h1, .stApp h2, .stApp h3, .stApp h4,
         div[data-testid="stMarkdownContainer"] h1,
         div[data-testid="stMarkdownContainer"] h2,
@@ -32,7 +30,6 @@ def apply_dark_theme():
             color:#FC4C02 !important;
         }
 
-        /* Icon-Buttons + Popover sauber zentriert untereinander */
         div[data-testid="stButton"], div[data-testid="stPopover"] {
             display:flex !important; flex-direction:column !important;
             align-items:center !important; justify-content:center !important;
@@ -44,7 +41,6 @@ def apply_dark_theme():
             color:#E6E6E6 !important; text-transform:uppercase;
         }
 
-        /* Metric-Cards dunkel */
         div[data-testid="stMetric"] {
             background-color:#242424 !important; padding:24px !important;
             border-radius:10px !important; border:1px solid #333333 !important;
@@ -54,11 +50,10 @@ def apply_dark_theme():
             color:#9A9A9A !important; font-size:13px !important;
             text-transform:uppercase; letter-spacing:0.5px !important; font-weight:600 !important;
         }
-        div[data-testid="stMetricValue"] { 
-            color:#FFFFFF !important; font-size:30px !important; font-weight:800 !important; 
+        div[data-testid="stMetricValue"] {
+            color:#FFFFFF !important; font-size:30px !important; font-weight:800 !important;
         }
 
-        /* Dropdowns dunkel */
         div[data-testid="stSelectbox"] div[data-baseweb="select"],
         div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
             background-color:#242424 !important; background:#242424 !important;
@@ -69,7 +64,6 @@ def apply_dark_theme():
 
         hr { border-color:#333333 !important; margin:30px 0 !important; }
 
-        /* Icon-Buttons (Emoji) bleiben transparent */
         div[data-testid="stButton"] button {
             background-color:transparent !important; border:none !important; padding:0 !important;
             font-size:38px !important; line-height:1 !important; box-shadow:none !important;
@@ -81,7 +75,6 @@ def apply_dark_theme():
         div[data-testid="stPopover"] button p { font-size:38px !important; line-height:1 !important; }
         div[data-testid="stButton"] button:hover p { color:#FC4C02 !important; transform:scale(1.08) !important; }
 
-        /* Aktions-Buttons = orange Pille mit dunkler Schrift */
         div[data-testid="stButton"] button[kind="primary"],
         div[data-testid="stButton"] button[data-testid="stBaseButton-primary"] {
             background-color:#FC4C02 !important; border:none !important; border-radius:30px !important;
@@ -93,11 +86,10 @@ def apply_dark_theme():
             color:#1A1A1A !important; font-size:16px !important; font-weight:800 !important;
             text-transform:uppercase; letter-spacing:0.3px;
         }
-        div[data-testid="stButton"] button[kind="primary"]:hover { 
-            background-color:#E34402 !important; transform:scale(1.03) !important; 
+        div[data-testid="stButton"] button[kind="primary"]:hover {
+            background-color:#E34402 !important; transform:scale(1.03) !important;
         }
 
-        /* ---------- DROPDOWN-MENÜ (offen): orange Schrift auf schwarz ---------- */
         ul[data-baseweb="menu"], div[data-baseweb="popover"] ul[role="listbox"] {
             background-color:#1A1A1A !important;
         }
@@ -110,7 +102,6 @@ def apply_dark_theme():
             background-color:#242424 !important; color:#FC4C02 !important;
         }
 
-        /* ---------- SEGMENTED CONTROL (Zeitraum / Dauer-km): alle lesbar ---------- */
         div[data-testid="stSegmentedControl"] button p,
         div[data-testid="stSegmentedControl"] label p {
             color:#E6E6E6 !important; font-size:15px !important; font-weight:600 !important;
@@ -138,8 +129,56 @@ def apply_dark_theme():
             background-color:#FC4C02 !important; color:#1A1A1A !important; border-color:#FC4C02 !important;
         }
 
-        /* Profilbild abgerundet */
         img { border-radius:8px !important; border:1px solid #333333 !important; }
+
+        /* ============ NEU ============ */
+
+        /* Eingabefelder dunkel (Text / Zahl / Datum) */
+        div[data-testid="stTextInput"] input,
+        div[data-testid="stNumberInput"] input,
+        div[data-testid="stDateInput"] input,
+        div[data-testid="stTextInput"] div[data-baseweb="input"],
+        div[data-testid="stNumberInput"] div[data-baseweb="input"],
+        div[data-testid="stDateInput"] div[data-baseweb="input"] {
+            background-color:#242424 !important; color:#E6E6E6 !important;
+            border:1px solid #333333 !important; border-radius:8px !important;
+        }
+        div[data-testid="stTextInput"] label p,
+        div[data-testid="stNumberInput"] label p,
+        div[data-testid="stDateInput"] label p,
+        div[data-testid="stFileUploader"] label p {
+            color:#E6E6E6 !important; font-weight:600 !important;
+        }
+        /* Plus/Minus-Stepper der Zahlenfelder */
+        div[data-testid="stNumberInput"] button {
+            background-color:#333333 !important; border:none !important;
+        }
+        div[data-testid="stNumberInput"] button p { color:#E6E6E6 !important; font-size:18px !important; }
+
+        /* Datei-Upload sichtbar */
+        div[data-testid="stFileUploader"] section {
+            background-color:#242424 !important; border:1px dashed #555555 !important;
+        }
+        div[data-testid="stFileUploader"] section * { color:#E6E6E6 !important; }
+        div[data-testid="stFileUploader"] button {
+            background-color:#FC4C02 !important; border:none !important; border-radius:8px !important;
+        }
+        div[data-testid="stFileUploader"] button p { color:#1A1A1A !important; font-weight:700 !important; }
+
+        /* Formular-Submit-Buttons (Training hinzufügen / Änderungen speichern) orange */
+        div[data-testid="stFormSubmitButton"] button {
+            background-color:#FC4C02 !important; border:none !important; border-radius:30px !important;
+            padding:10px 24px !important; width:auto !important;
+        }
+        div[data-testid="stFormSubmitButton"] button p {
+            color:#1A1A1A !important; font-weight:800 !important;
+            text-transform:uppercase; letter-spacing:0.3px; font-size:15px !important;
+        }
+
+        /* Toast & Tooltip: dunkle (schwarze) Schrift auf hellem Hintergrund */
+        div[data-testid="stToast"], div[data-testid="stToast"] * { color:#1A1A1A !important; }
+        div[data-testid="stTooltipContent"], div[data-testid="stTooltipContent"] *,
+        div[role="tooltip"], div[role="tooltip"] * { color:#1A1A1A !important; }
         </style>
         """,
         unsafe_allow_html=True,

@@ -3,7 +3,7 @@ import json
 import os
 from auth import login_user, register_user
 
-from views.hilfe_button import zeige_hilfe_bereich
+from views.extras.hilfe_button import zeige_hilfe_bereich
 
 DARK_CSS = """
 <style>
@@ -52,6 +52,11 @@ div[data-testid="stPopover"] button p,
 div[data-testid="stButton"] button:not([kind="primary"]) p {
     font-size:44px !important; color:#FC4C02 !important; line-height:1 !important;
 }
+
+/* Toast & Tooltip: schwarze Schrift auf hellem Hintergrund */
+div[data-testid="stToast"], div[data-testid="stToast"] * { color:#1A1A1A !important; }
+div[data-testid="stTooltipContent"], div[data-testid="stTooltipContent"] *,
+div[role="tooltip"], div[role="tooltip"] * { color:#1A1A1A !important; }
 </style>
 """
 
@@ -77,7 +82,7 @@ def render_login_page():
 
     # ----------------------------- LOGIN -----------------------------
     if st.session_state.page == "login":
-        st.title("Beat faster!")
+        st.markdown("<div style='font-size:40px; font-weight:800; letter-spacing:-1px; color:#FC4C02; margin-bottom:30px;'>Beat faster!</div>", unsafe_allow_html=True)
 
         login_id = st.text_input("ID", placeholder="z. B. 12345")
         password = st.text_input("Passwort", type="password")
@@ -101,7 +106,7 @@ def render_login_page():
 
     # -------------------------- REGISTRIEREN --------------------------
     elif st.session_state.page == "registrieren":
-        st.title("Registrieren")
+        st.markdown("<div style='font-size:40px; font-weight:800; letter-spacing:-1px; color:#FC4C02; margin-bottom:30px;'>Registrieren</div>", unsafe_allow_html=True)
 
         name = st.text_input("Name")
         pw1 = st.text_input("Passwort", type="password")
@@ -125,7 +130,7 @@ def render_login_page():
 
     # ----------------------------- ERFOLG -----------------------------
     elif st.session_state.page == "erfolg":
-        st.title("Beat faster!")
+        st.markdown("<div style='font-size:40px; font-weight:800; letter-spacing:-1px; color:#FC4C02; margin-bottom:30px;'>Beat faster!</div>", unsafe_allow_html=True)
         st.success("Account erstellt!")
         st.subheader(f"Deine ID lautet: {st.session_state.get('neue_id', '—')}")
         st.info("Merke dir diese ID – damit meldest du dich an.")

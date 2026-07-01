@@ -2,7 +2,7 @@
 Legt für jede Person aus person_db.json ein Login-Passwort an und speichert
 die bcrypt-Hashes in auth_db.json.
 
-Standard-Passwort für ALLE: 123   (kannst du unten ändern)
+Standard-Passwort für ALLE: 123   (kannst man unten ändern)
 
 Aufruf:  python passwoerter_einrichten.py   (nach daten_generieren.py ausführen!)
 """
